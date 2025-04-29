@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nickname Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        input, button, select {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        #nicknameOutput {
+            font-size: 20px;
+            margin: 20px 0;
+            word-wrap: break-word;
+        }
+        .note {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+        .ad-banner {
+            margin: 20px auto;
+            max-width: 728px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nickname Generator</h1>
+    <p>Enter your name or a keyword for a custom nickname, or leave blank for a random one.</p>
+    <p class="note">Choose a style to make it fun, cool, or quirky!</p>
+    
+    <input type="text" id="baseInput" placeholder="e.g., Alex or dragon">
+    <br>
+    <select id="雷火电竞官方版app下载
+        <option value="fun">Fun</option>
+        <option value="cool">Cool</option>
+        <option value="quirky">Quirky</option>
+    </select>
+    <br>
+    <button onclick="generateNickname()">Generate Nickname</button>
+    <button onclick="copyToClipboard()">Copy</button>
+    
+    <div id="nicknameOutput"></div>
+    
+    <!-- AdSense Banner Ad -->
+    <div class="ad-banner">
+        <!-- Replace this with your Google AdSense ad code -->
+        <!-- Example placeholder: <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx" data-ad-slot="xxxxxxxxxx" data-ad-format="auto"></ins> -->
+    </div>
+
+    <script>
+        const prefixes = {
+            fun: ['Giggle', 'Bouncy', 'Wacky', 'Zany', 'Happy'],
+            cool: ['Slick', 'Blaze', 'Ace', 'Viper', 'Shadow'],
+            quirky: ['Oddball', 'Whiz', 'Fizzle', 'Quack', 'Noodle']
+        };
+
+        const suffixes = {
+            fun: ['Spark', 'Pop', 'Bounce', 'Fizz', 'Zap'],
+            cool: ['Strike', 'Rider', 'Wolf', 'Hawk', 'Edge'],
+            quirky: ['Doodle', 'Wig', 'Bean', 'Puddle', 'Twist']
+        };
+
+        function generateNickname() {
+            const baseInput = document.getElementById('baseInput').value.trim();
+            const style = document.getElementById('style').value;
+
+            let nickname;
+            if (baseInput) {
+                nickname = adaptInput(baseInput, style);
+            } else {
+                nickname = generateRandomNickname(style);
+            }
+
+            document.getElementById('nicknameOutput').textContent = nickname;
+        }
+
+        function adaptInput(input, style) {
+            const base = input.replace(/[^a-zA-Z]/g, '').slice(0, 10);
+            if (!base) return generateRandomNickname(style);
+
+            const prefix = prefixes[style][Math.floor(Math.random() * prefixes[style].length)];
+            const suffix = suffixes[style][Math.floor(Math.random() * suffixes[style].length)];
+            const useBase = Math.random() > 0.3;
+
+            if (useBase) {
+                const adaptedBase = base.charAt(0).toUpperCase() + base.slice(1).toLowerCase();
+                return Math.random() > 0.5 ? `${prefix}${adaptedBase}` : `${adaptedBase}${suffix}`;
+            } else {
+                return `${prefix}${suffix}`;
+            }
+        }
+
+        function generateRandomNickname(style) {
+            const prefix = prefixes[style][Math.floor(Math.random() * prefixes[style].length)];
+            const suffix = suffixes[style][Math.floor(Math.random() * suffixes[style].length)];
+            return `${prefix}${suffix}`;
+        }
+
+        function copyToClipboard() {
+            const nickname = document.getElementById('nicknameOutput').textContent;
+            navigator.clipboard.writeText(nickname).then(() => {
+                alert('Nickname copied to clipboard!');
+            });
+        }
+
+        // Initialize AdSense (uncomment when you have your ad code)
+        // (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
